@@ -42,3 +42,17 @@ def dates_to_datetime(data: DataFrame, column: str) -> None:
     """
     for index in data.index:
         data.loc[index, column] = to_datetime(data.loc[index, column])
+
+
+def remove_dates_before(data: DataFrame, column: str, date: datetime) -> None:
+    """
+    Remove all rows with dates in column before date.
+    """
+    data.drop(data.loc[data[column] < date].index, inplace=True)
+
+
+def remove_dates_after(data: DataFrame, column: str, date: datetime) -> None:
+    """
+    Remove all rows with dates in column after date.
+    """
+    data.drop(data.loc[data[column] > date].index, inplace=True)
