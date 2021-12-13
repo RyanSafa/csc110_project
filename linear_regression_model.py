@@ -3,9 +3,8 @@ linear regression
 """
 
 import pandas as pd
-import datetime
 import plotly.express as px
-from data_cleanup import keep_for_value, remove_columns, dates_to_datetime, remove_dates_before, remove_dates_after
+from data_cleanup import *
 
 
 # DATAFRAME FOR CONTAINERS FROM SHANGHAI TO TORONTO
