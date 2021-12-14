@@ -1,8 +1,14 @@
 """
-Enter text here
+Secondary file for CSC110 Project
+
+Copyright and Usage Information
+===============================
+
+This file is Copyright (c) 2020 Ryan Safaeian, Akshat aneja,
+Jyotiraditya Gupta, and Manav Manoj Malviya
 """
-from pandas import DataFrame, to_datetime
 import datetime
+from pandas import DataFrame, to_datetime
 
 
 def remove_columns(data: DataFrame, column_indices: list[int]) -> None:
@@ -56,3 +62,16 @@ def remove_dates_after(data: DataFrame, column: str, date: datetime) -> None:
     Remove all rows with dates in column after date.
     """
     data.drop(data.loc[data[column] > date].index, inplace=True)
+
+
+if __name__ == '__main__':
+    import python_ta.contracts
+
+    python_ta.check_all(config={
+        'extra-imports': ['pandas', 'datetime'],  # the names (strs) of imported modules
+        'allowed-io': [],  # the names (strs) of functions that call print/open/input
+        'max-line-length': 100,
+        'disable': ['R1705', 'C0200']
+    })
+    python_ta.contracts.DEBUG_CONTRACTS = False
+    python_ta.contracts.check_all_contracts()

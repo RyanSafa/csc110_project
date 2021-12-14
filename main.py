@@ -1,22 +1,44 @@
 """
-Enter text here
+Main file for CSC110 Project
+
+Copyright and Usage Information
+===============================
+
+This file is Copyright (c) 2020 Ryan Safaeian, Akshat aneja,
+Jyotiraditya Gupta, and Manav Manoj Malviya
 """
+import datetime
+import matplotlib.pyplot as mpl
 import pandas as pd
 import plotly.express as px
-from data_cleanup import remove_columns, filter_for_value
-from categorize_products import *
-from linear_regression_model import *
-import matplotlib
 
-food_data = pandas.read_csv('data/food_data.csv')
+from categorize_products import create_food_items, \
+    create_inflation_dataframe, determine_category, \
+    get_average_inflation
+from data_cleanup import dates_to_datetime, filter_for_value, \
+    remove_columns, remove_dates_after
+from linear_regression_model import clean_covid_for_cases_df, clean_up_end_to_end_df
+
+food_data = pd.read_csv('data/food_data.csv')
+
+# data clean up
 remove_columns(food_data, [1, 2, 4, 5, 6, 7, 8, 9, 11, 12, 14])
 filter_for_value(food_data, {3: 't'})
-foods = organize_foods(food_data)
+dates_to_datetime(food_data, 'REF_DATE')
+
+
+foods = create_food_items(food_data)
 foods_lst = determine_category(foods)
 avg_inflation_list = get_average_inflation(foods_lst)
-df = create_inflation_datafram(foods[0].date_list, avg_inflation_list)
+date_list = food_data[food_data.columns[0]].drop_duplicates().tolist()
+df = create_inflation_dataframe(date_list, avg_inflation_list)
+
+# create a line plot with 'DATE' as the x-axis and
+# the y-axis as the inflation for each category of
+# products
 
 df.plot.line(x="DATE")
+mpl.show()
 
 e2e_data = pd.read_csv('data/supply_chain_data.csv')
 clean_up_end_to_end_df(e2e_data)
