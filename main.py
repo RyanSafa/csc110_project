@@ -32,7 +32,7 @@ foods = create_food_items(food_data)
 foods_lst = determine_category(foods)
 avg_inflation_list = get_average_inflation(foods_lst)
 date_list = food_data[food_data.columns[0]].drop_duplicates().tolist()
-df = create_inflation_dataframe(date_list, avg_inflation_list)
+df = create_inflation_dataframe(date_list[:len(date_list) - 1], avg_inflation_list)
 
 # create a line plot with 'DATE' as the x-axis and
 # the y-axis as the inflation for each category of

@@ -30,6 +30,9 @@ class FoodItem:
     A class representing a food item, which has a product name,
     and a value_list, which represents the price of the FoodItem
     from January 1995 to September 2021
+
+    Representational Invariant:
+     - len(self.value_list) > 1
     """
     product: str
     value_list: list[float]
@@ -100,7 +103,7 @@ class Foods:
         # this for loop removes a list in food_item_inflation
         # given that it's length is not 320, which means that
         # the FoodItem has been added to the data file after
-        # January 1st 1995. Which means we cannot include it
+        # January 1st 1995. So, we cannot include it
         # in our analysis, since we are looking to track
         # inflation rates from January 1st 1995.
 
@@ -113,8 +116,8 @@ class Foods:
 
         for i in range(len(food_item_inflation[0])):
             avg = 0
-            for j in range(len(food_item_inflation)):
-                avg += food_item_inflation[j][i]
+            for x in food_item_inflation:
+                avg += x[i]
             avg = avg / len(food_item_inflation[0]) * 100
             avg_inflation.append(avg)
 
@@ -138,8 +141,11 @@ def create_food_items(food_data: DataFrame) -> list[FoodItem]:
 def determine_category(foods_list: list[FoodItem]) -> list[Foods]:
     """
     Return a list of foods from foods_list.
+
+    Precondition:
+      - len(foods_list) != []
     """
-    # create an empty list array with 7 sublists
+    # create an empty list with 7 sublists
     amount_of_categories = 7
     product_list = [[] for _ in range(amount_of_categories)]
 
@@ -177,6 +183,9 @@ def get_average_inflation(foods_lst: list[Foods]) -> list[list[float]]:
     """
         given a list of foods, return a list containing lists of
         average inflation for each Food.
+
+    Preconditions:
+      - len(foods_list) != []
     """
     avg_inflation_list = []
 
@@ -193,8 +202,12 @@ def create_inflation_dataframe(date_list: list[datetime.date],
     from January 1995 to September 2021 and infl_avg_list, which represents
     the a list that contains a list containg floats, which represent
     the inflation for a  Foods object.
+
+    Preconditions:
+      - len(infl_avg_list) == 7
+      - all(len(sublist) == len(date_list) for sublist in infl_avg_list)
     """
-    d = {'DATE': date_list[:len(date_list) - 1], 'MEAT_AVG_INFL': infl_avg_list[0],
+    d = {'DATE': date_list, 'MEAT_AVG_INFL': infl_avg_list[0],
          'DAIRY_AVG_INFL': infl_avg_list[1], 'FRUIT_AVG_INFL': infl_avg_list[2],
          'VEG_AVG_INFL': infl_avg_list[3], 'MISC_AVG_INFL': infl_avg_list[4],
          'HYGEINE_AVG_INFL': infl_avg_list[5], 'OTHER_AVG_INFL': infl_avg_list[6]}
