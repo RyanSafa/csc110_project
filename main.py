@@ -39,7 +39,7 @@ df = create_inflation_dataframe(date_list, avg_inflation_list)
 # products
 
 df.plot.line(x="DATE")
-plt.ylabel('Inflation Rate')
+plt.ylabel('Inflation')
 mpl.show()
 
 e2e_data = pd.read_csv('data/supply_chain_data.csv')
