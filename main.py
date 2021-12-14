@@ -9,6 +9,7 @@ Jyotiraditya Gupta, and Manav Manoj Malviya
 """
 import datetime
 import matplotlib.pyplot as mpl
+import matplotlib.pyplot as plt
 import pandas as pd
 import plotly.express as px
 
@@ -38,6 +39,7 @@ df = create_inflation_dataframe(date_list, avg_inflation_list)
 # products
 
 df.plot.line(x="DATE")
+plt.ylabel('Inflation Rate')
 mpl.show()
 
 e2e_data = pd.read_csv('data/supply_chain_data.csv')
